@@ -1,4 +1,6 @@
 from random import choice
+#from random method import choice 
+#choice will randomize word from list below
 
 
 def open_and_read_file(file_path):
@@ -31,12 +33,28 @@ def make_chains(text_string):
     chains = {}
 
     words = text_string.split()
+    #splits the text string into individual words in list
+    #split will return a list, always
     words.append(None)
+    #append None to words list becuase it's a marker to stop. Terminate.
 
     for i in range(len(words)-2):
+        #for index in range of the length of words -2 to allow for 3 variables 
+        #in the end
+
+        bi_gram = (words[i], words[i + 1])
+        # makes key, which is a tuple of a word and the next consecutive word
         
-        chains[(words[i], words[i + 1])] = chains.get((words[i], words[i + 1]), [])
-        chains[(words[i], words[i + 1])].append(words[i + 2])
+        chains[bi_gram] = chains.get(bi_gram, [])
+        # a["berry"] = a.get("berry", [])
+        # will check for existence of bi_gram key, and if it doesn't exist, 
+        # add it as key + empty string as value
+
+        chains[bi_gram].append(words[i + 2])
+        #will append a possible consecutive word.
+
+        # chains[bi_gram] is REPRESENTING the value. So we are appending to
+        # the value which is a LIST. Therefore you can append to it!
    
     return chains
 
@@ -64,7 +82,7 @@ def make_text(chains):
 
 
 
-input_path = "green-eggs.txt"
+input_path = "gettysburg.txt"
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
