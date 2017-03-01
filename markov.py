@@ -31,6 +31,8 @@ def make_chains(text_string):
     chains = {}
 
     words = text_string.split()
+    words.append(None)
+
     for i in range(len(words)-2):
         
         chains[(words[i], words[i + 1])] = chains.get((words[i], words[i + 1]), [])
@@ -48,9 +50,18 @@ def make_text(chains):
     first, second = bi_gram
     third = choice(chains[bi_gram])
 
-    text += first + " " + second + " " + third
+
+    text += first + " " + second
+
+
+    while third:
+        text += " " + third
+        bi_gram = (second, third)
+        first, second = bi_gram
+        third = choice(chains[bi_gram])
 
     return text
+
 
 
 input_path = "green-eggs.txt"
